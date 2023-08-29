@@ -22,7 +22,10 @@
   "plugins": ["eslint-plugin-simple-import-sort", "unused-imports"],
   "overrides": [
     {
-      "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
       "plugins": ["jest", "testing-library"],
       "extends": ["plugin:jest/recommended", "plugin:testing-library/react"],
       "rules": { "jest/prefer-expect-assertions": "off" }
