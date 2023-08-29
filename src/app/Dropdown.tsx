@@ -5,12 +5,10 @@ function Dropdown() {
     <>
       <div className="font-sans w-[196px] h-[248px] rounded-md bg-[#282828]  content-center text-white">
         <li>
-          {" "}
           <button className="flex py-3 pr-2 pb-3 pl-3">
-            {" "}
             <span>계정</span>
             <BiLinkExternal />
-          </button>{" "}
+          </button>
         </li>
         <li>
           <button className="flex py-3 pr-2 pb-3 pl-3">
@@ -18,7 +16,6 @@ function Dropdown() {
           </button>
         </li>
         <li>
-          {" "}
           <button className="flex py-3 pr-2 pb-3 pl-3">
             <span>지원</span> <BiLinkExternal />
           </button>
