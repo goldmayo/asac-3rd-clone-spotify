@@ -18,8 +18,6 @@ export default function PlaylistInfo() {
 
   useEffect(() => {
     async function getImage() {
-      console.log('playlistInfo.coverImg', playlistInfo)
-
       const storageRef = ref(storage, `images/${playlistInfo.coverImg}`)
       await getDownloadURL(storageRef)
         .then((url) => {
@@ -31,11 +29,9 @@ export default function PlaylistInfo() {
         })
     }
     if (playlistInfo.coverImg !== null) {
-      console.log('playlistInfo.coverImg in if', playlistInfo)
-
       getImage()
     }
-  }, [playlistInfo])
+  }, [playlistInfo.coverImg])
   async function uploadImage({ file }) {
     const storage = getStorage()
     const imageRef = ref(storage, `images/${file.name}`)

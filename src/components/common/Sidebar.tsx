@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 import { addDoc, collection, onSnapshot } from 'firebase/firestore'
@@ -75,16 +76,36 @@ function Sidebar() {
   )
 
   const [playlist, setPlaylists] = useState<any[]>()
-
+  const [loadingImages, setLoadingImages] = useState(true)
   useEffect(() => {
     const playlistSnap = onSnapshot(collection(firebaseDB, 'myPlaylists'), (playlists) => {
       const playlistData: any[] = []
+      const promises = []
+
       playlists.forEach((doc) => {
-        console.log(doc.data().coverImg)
-        playlistData.push({ id: doc.id, data: doc.data(), img: getImage(doc.data().coverImg) })
+        const playlistItem = doc.data()
+        promises.push(
+          getDownloadURL(ref(getStorage(), `images/${playlistItem.coverImg}`))
+            .then((url) => {
+              console.log('img downloaded', url)
+              playlistData.push({ id: doc.id, data: playlistItem, img: url })
+            })
+            .catch((e) => {
+              // 이미지 다운로드에 실패한 경우 기본 이미지 URL을 사용하거나 다른 대체 처리를 할 수 있습니다.
+              playlistData.push({ id: doc.id, data: playlistItem, img: '/img/playlistDefault.png' })
+            }),
+        )
       })
-      setPlaylists(playlistData)
-      console.log('sidebar setPlaylists')
+
+      Promise.all(promises)
+        .then(() => {
+          setPlaylists(playlistData)
+          setLoadingImages(false)
+          console.log('sidebar setPlaylists')
+        })
+        .catch((error) => {
+          console.error('Error loading playlist images:', error)
+        })
     })
   }, [])
 
@@ -187,14 +208,15 @@ function Sidebar() {
                   className="cursor-pointer hover:bg-color-hover-primary"
                   href={`/myplaylist/${item.id}`}
                 >
-                  <div className="grid grid-cols-[auto_1fr] p-2 gap-x-3 gap-y-2">
+                  <div className="grid grid-cols-[auto_1fr] p-2 gap-x-3 gap-y-2 rounded-md">
                     <Image
-                      className="rouded-md"
+                      className="rounded-md"
                       src={item.img}
                       alt={item.data.title ? item.data.title : '플레이리스트'}
                       width={48}
                       height={48}
                     />
+
                     <div className={`flex flex-col`}>
                       <span className="break-all text-color-text-primary line-clamp-1">{`${item.data.title}`}</span>
                       <span className="text-color-text-secondary">{`playlist-${item.data.author}`}</span>
