@@ -5,7 +5,7 @@ import getUsersTopItems from '@/core/api/user/getUsersTopItems'
 import { createContentFromItem } from '@/lib/utils/createContentObject'
 import { GetUserTopItems, UserTopArtistItem } from '@/types/raw-api-data-type/user/get-user-top-items-data-type'
 export default async function Home() {
-  const usersTopItems: GetUserTopItems | undefined = await getUsersTopItems(10)
+  const usersTopItems: GetUserTopItems | undefined = await getUsersTopItems(10, 'artist')
 
   return (
     <div className="flex-col">
