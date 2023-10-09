@@ -4,17 +4,17 @@ import { useState } from 'react'
 import { LuClock3 } from 'react-icons/lu'
 import { VscHeart } from 'react-icons/vsc'
 
-import useCalcDate from '@/lib/hooks/useCalcTime'
 import { Item } from '@/types/raw-api-data-type/playlist/get-playlist-type'
-
 
 interface TracksProps {
   tracks: Item[];
 }
 
-
+function formatDateToLocaleString(date) {
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  return new Date(date).toLocaleDateString('ko-KR');
+}
 function Tracks({ tracks }: TracksProps) {
-  const calcDate = useCalcDate()
   const [hover, setHover] = useState<number | null>(null)
 
   return (
@@ -47,7 +47,7 @@ function Tracks({ tracks }: TracksProps) {
               </div>
             </span>
             <span className="w-2/6 text-sm">{item.track.album.name}</span>
-            <span className="w-1/6 pl-2 text-sm">{calcDate(item.added_at)}</span>
+            <span className="w-1/6 pl-2 text-sm">{formatDateToLocaleString(item.added_at)}</span>
             <div className="w-[16px]">{index === hover && <VscHeart size={16} className="hover:text-white" />}</div>
             <span className=" text-[#B3B3B3] text-sm">
               {Math.floor(item.track.duration_ms / 60000)}:{((item.track.duration_ms % 60000) / 1000).toFixed(0).padStart(2, '0')}
