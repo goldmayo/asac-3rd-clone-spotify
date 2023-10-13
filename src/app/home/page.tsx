@@ -1,3 +1,4 @@
+import BarContentCard from '@/components/BarContentCard'
 import ContentCardListItem from '@/components/CardContentListItem'
 import ContentCardContainer from '@/components/common/ContentContainer'
 import getAvailableGenreSeeds from '@/core/api/genre/getAvailableGenreSeeds'
@@ -10,15 +11,16 @@ import { GetAvailableGenreSeeds } from '@/types/raw-api-data-type/genre/get-avai
 import { GetRecommendations } from '@/types/raw-api-data-type/track/get-recommandations-data-type'
 import { FollowedArtist } from '@/types/raw-api-data-type/user/followed-artist-data-type'
 import { GetCurrentUserProfile } from '@/types/raw-api-data-type/user/get-current-user-profile-data-type'
-import { GetUserTopItems } from '@/types/raw-api-data-type/user/get-user-top-items-data-type'
+import { GetUserTopItems, UserTopArtistItem } from '@/types/raw-api-data-type/user/get-user-top-items-data-type'
 
 export default async function Home() {
   // compound component pattern을 사용한 client component는 server component에서 사용할 수 없다
   // => dot notation을 사용할 수 없다.
-  const usersTopItems: GetUserTopItems = await getUsersTopItems(10, 'artist')
-  const usersTopTracks: GetUserTopItems = await getUsersTopItems(10, 'track')
+  const allTimeUserTopItems: GetUserTopItems = await getUsersTopItems(6, 'artist', 'long')
+  const usersTopItems: GetUserTopItems = await getUsersTopItems(10, 'artist', 'short')
+  const usersTopTracks: GetUserTopItems = await getUsersTopItems(10, 'track', 'short')
   const followedArtists: FollowedArtist = await getFollowedArtists(6)
-  const genreSeeds:GetAvailableGenreSeeds = await getAvailableGenreSeeds()
+  const genreSeeds: GetAvailableGenreSeeds = await getAvailableGenreSeeds()
   const recommendedTracks: GetRecommendations = await getRecommendations(
     usersTopItems.items[0].id,
     genreSeeds.genres,
@@ -26,7 +28,12 @@ export default async function Home() {
   )
   const userProfile: GetCurrentUserProfile = await getCurrentUsersProfile()
   return (
-    <>
+    // <></>
+    <section className="flex flex-col gap-10 pt-2 mb-10">
+      {/* <Banner type={'playlist'} inform={undefined}/> */}
+      <BarContentCard
+        content={allTimeUserTopItems.items.map((item) => createContentFromItem.artist(item as UserTopArtistItem))}
+      />
       <ContentCardContainer title={'좋아하는 아티스트'} linkPath={'/test'}>
         {followedArtists.artists.items.map((artist) => (
           <ContentCardListItem key={artist.id} content={createContentFromItem.artist(artist)} />
@@ -42,6 +49,6 @@ export default async function Home() {
           <ContentCardListItem key={track.id} content={createContentFromItem.track(track)} />
         ))}
       </ContentCardContainer>
-    </>
+    </section>
   )
 }
