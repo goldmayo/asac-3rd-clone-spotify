@@ -6,7 +6,7 @@ import { CurrentUsersPlaylist } from '@/types/raw-api-data-type/playlist/current
 export const playlistApi = createApi({
   reducerPath: 'playlistApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `https://api.spotify.com/v1/me/playlists`,
+    baseUrl: `${process.env.NEXT_PUBLIC_BASE_SPOTIFY_WEB_API_URL}/me/playlists`,
     prepareHeaders: async (headers) => {
       const session = await getSession()
       if (session) {

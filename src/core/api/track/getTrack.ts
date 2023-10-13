@@ -1,7 +1,7 @@
 import getAuthSession from '../auth/getAuthSession'
 
 const getTrack = async (id: string): Promise<any> => {
-  const baseUrl = 'https://api.spotify.com/v1'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_SPOTIFY_WEB_API_URL
   const session = await getAuthSession()
   if (session) {
     const url = `${baseUrl}/tracks/${id}`
@@ -12,7 +12,7 @@ const getTrack = async (id: string): Promise<any> => {
       },
     })
     if (!res.ok) {
-      throw new Error(`Fail to fetch data during ${getTrack.name}`)
+      throw new Error(`Fail to fetch data during ${getTrack.name} status code: ${res.status}`)
     }
     const data = res.json()
     return data

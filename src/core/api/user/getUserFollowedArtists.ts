@@ -1,7 +1,7 @@
 import getAuthSession from '../auth/getAuthSession'
 
 const getFollowedArtists = async (limit: number): Promise<any> => {
-  const baseUrl = 'https://api.spotify.com/v1'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_SPOTIFY_WEB_API_URL
   const session = await getAuthSession()
   if (session) {
     const url = `${baseUrl}/me/following?type=artist&limit=${limit}`
@@ -12,7 +12,7 @@ const getFollowedArtists = async (limit: number): Promise<any> => {
       },
     })
     if (!res.ok) {
-      throw new Error(`Fail to fetch data during ${getFollowedArtists.name}`)
+      throw new Error(`Fail to fetch data during ${getFollowedArtists.name} status code: ${res.status}`)
     }
     const data = res.json()
     return data

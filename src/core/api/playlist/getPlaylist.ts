@@ -1,7 +1,7 @@
 import getAuthSession from '../auth/getAuthSession'
 
 const getPlaylist = async (playlist_id: string): Promise<any> => {
-  const baseUrl = 'https://api.spotify.com/v1'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_SPOTIFY_WEB_API_URL
   const session = await getAuthSession()
   if (session) {
     const url = `${baseUrl}/playlists/${playlist_id}`
@@ -12,10 +12,9 @@ const getPlaylist = async (playlist_id: string): Promise<any> => {
       },
     })
     if (!res.ok) {
-      throw new Error(`Fail to fetch data during ${getPlaylist.name}`)
+      throw new Error(`Fail to fetch data during ${getPlaylist.name} status code: ${res.status}`)
     }
     const data = res.json()
-    console.log("playlist data",data)
     return data
   }
 }

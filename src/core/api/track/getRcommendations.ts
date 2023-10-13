@@ -1,7 +1,7 @@
 import getAuthSession from '../auth/getAuthSession'
 
 const getRecommendations = async (artist_id: string, genre_array: string[], track_id: string): Promise<any> => {
-  const baseUrl = 'https://api.spotify.com/v1'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_SPOTIFY_WEB_API_URL
   const session = await getAuthSession()
   const seed_genres = genre_array.slice(0, 3).join('%2C')
   if (session) {

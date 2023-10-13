@@ -17,7 +17,7 @@ export interface IstartAndResumePlaybackArg {
 export const playerApi = createApi({
   reducerPath: 'playerApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `https://api.spotify.com/v1/me/player`,
+    baseUrl: `${process.env.NEXT_PUBLIC_BASE_SPOTIFY_WEB_API_URL}/me/player`,
     prepareHeaders: async (headers) => {
       const session = await getSession()
       if (session) {

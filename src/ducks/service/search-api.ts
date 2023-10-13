@@ -5,7 +5,7 @@ import { GetSearchforItem } from '@/types/raw-api-data-type/search/search-for-it
 export const searchApi = createApi({
   reducerPath: 'searchApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `https://api.spotify.com/v1/`,
+    baseUrl: `${process.env.NEXT_PUBLIC_BASE_SPOTIFY_WEB_API_URL}`,
     prepareHeaders: async (headers) => {
       const session = await getSession()
       if (session) {

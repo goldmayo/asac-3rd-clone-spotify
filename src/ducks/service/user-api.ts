@@ -8,7 +8,7 @@ import { GetCurrentUserProfile } from '@/types/raw-api-data-type/user/get-curren
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `https://api.spotify.com/v1/me`,
+    baseUrl: `${process.env.NEXT_PUBLIC_BASE_SPOTIFY_WEB_API_URL}/me`,
     prepareHeaders: async (headers) => {
       const session = await getSession()
       if (session) {
