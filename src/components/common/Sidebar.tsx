@@ -18,6 +18,7 @@ import { useGetUserFollowedArtistQuery } from '@/ducks/service/user-api'
 import { cn } from '@/lib/utils/classNames'
 import { convertWidthToBoundary } from '@/lib/utils/convert'
 import { createContentFromItem } from '@/lib/utils/createContentObject'
+import { defaultPlaylistImage } from '@/lib/utils/staticImages'
 import { Item } from '@/types/raw-api-data-type/playlist/current-users-playlist-data-type'
 
 import SidebarItem from './sidebar/SidebarItem'
@@ -203,26 +204,29 @@ function Sidebar() {
             )}
             <ul className="flex flex-col gap-2">
               {playlist?.map((item) => (
-                <Link
-                  key={item.id}
-                  className="cursor-pointer hover:bg-color-hover-primary"
-                  href={`/myplaylist/${item.id}`}
-                >
-                  <div className="grid grid-cols-[auto_1fr] p-2 gap-x-3 gap-y-2 rounded-md">
-                    <Image
-                      className="rounded-md"
-                      src={item.img}
-                      alt={item.data.title ? item.data.title : '플레이리스트'}
-                      width={48}
-                      height={48}
-                    />
-
-                    <div className={`flex flex-col`}>
-                      <span className="break-all text-color-text-primary line-clamp-1">{`${item.data.title}`}</span>
-                      <span className="text-color-text-secondary">{`playlist-${item.data.author}`}</span>
+                <li key={`${item.id}`} className="cursor-pointer hover:bg-color-hover-primary">
+                  <Link href={`/myplaylist/${item.id}`}>
+                    <div
+                      className={cn('grid grid-cols-[auto_1fr] p-2 gap-x-3 gap-y-2 overflow-x-hidden', {
+                        'grid-cols-1 p-0': width <= shrinkPoint,
+                      })}
+                    >
+                      <Image
+                        className="rounded-md"
+                        src={!item.img ? defaultPlaylistImage : item.img}
+                        width={48}
+                        height={48}
+                        alt={item.data.title ? item.data.title : '플레이리스트'}
+                      />
+                      {width >= shrinkPoint && (
+                        <div className={`flex flex-col`}>
+                          <span className="break-all text-color-text-primary line-clamp-1">{`${item.data.title}`}</span>
+                          <span className="text-color-text-secondary">{`playlist-${item.data.author}`}</span>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                </li>
               ))}
             </ul>
             <ul className="flex flex-col gap-2">
@@ -236,7 +240,7 @@ function Sidebar() {
                         type: `${playlist.type} • ${playlist.owner.display_name}`,
                       }}
                       playedAt={0}
-                      sidebarWitdh={width}
+                      sidebarWidth={width}
                       shrinkPoint={shrinkPoint}
                     />
                   </Link>
@@ -251,7 +255,7 @@ function Sidebar() {
                       type: `${artist.type}`,
                     }}
                     playedAt={0}
-                    sidebarWitdh={width}
+                    sidebarWidth={width}
                     shrinkPoint={shrinkPoint}
                   />
                 ))}
