@@ -5,15 +5,18 @@ import React from 'react'
 import AlbumCardContentList from '@/components/AlbumCardContentList'
 import Banner from '@/components/common/Banner'
 import GlobalPlayButton from '@/components/common/GlobalPlayButton'
+import LyricsContainer from '@/components/common/lyrics/LyricsContainer'
 import TrackContainer from '@/components/common/trackItem/TrackContainer'
 import getArtist from '@/core/api/artist/getArtist'
 import getArtistTopsTrack from '@/core/api/artist/getArtistTopTrack'
+import getLyricsByTrackId from '@/core/api/track/getLyricsByTrackId'
 import getTrack from '@/core/api/track/getTrack'
 import { cn } from '@/lib/utils/classNames'
 import { defaultUserImage } from '@/lib/utils/staticImages'
 import { GetArtist } from '@/types/raw-api-data-type/artist/get-artist-data-type'
 import { GetArtistTopTrack } from '@/types/raw-api-data-type/artist/get-artist-top-track-data-type'
 import { GetArtistsAlbums } from '@/types/raw-api-data-type/artist/get-artists-albums-data-type'
+import { Lyrics } from '@/types/raw-api-data-type/lyrics/get-lyrics-by-track-id-data'
 import { GetTrack } from '@/types/raw-api-data-type/track/get-track-data-type'
 
 import getArtistAlbums from '../../../core/api/artist/getArtistAlbums'
@@ -23,6 +26,8 @@ export default async function page({ params }: { params: { slug: string } }) {
   const artist: GetArtist = await getArtist(track?.artists![0].id)
   const topTracks: GetArtistTopTrack = await getArtistTopsTrack(track?.artists![0].id!)
   const albums: GetArtistsAlbums = await getArtistAlbums(track?.artists![0].id, 8)
+  const lyrics: Lyrics = await getLyricsByTrackId(params.slug)
+
   return (
     <>
       <Banner
@@ -44,6 +49,7 @@ export default async function page({ params }: { params: { slug: string } }) {
           팔로잉
         </button>
       </div>
+      {!lyrics.error && <LyricsContainer uri={track.uri} lyrics={lyrics} />}
       <div className="cursor-pointer hover:bg-color-hover-primary">
         <Link href={`/${artist.type}/${artist.id}`}>
           <div className={cn('grid grid-cols-[auto_1fr] p-2 gap-x-3 gap-y-2 overflow-x-hidden')}>

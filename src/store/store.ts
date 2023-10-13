@@ -8,6 +8,7 @@ import createWebStorage from 'redux-persist/lib/storage/createWebStorage'
 import libarySlice from '@/ducks/features/library/library'
 import { playerSlice } from '@/ducks/features/player/player'
 import tokenSlice from '@/ducks/features/token/tokenSlice'
+import { lyricsApi } from '@/ducks/service/lyrics-api'
 import { playerApi } from '@/ducks/service/player-api'
 import { playlistApi } from '@/ducks/service/playlist-api'
 import { searchApi } from '@/ducks/service/search-api'
@@ -52,13 +53,20 @@ const store = configureStore({
     [playerApi.reducerPath]: playerApi.reducer,
     [playlistApi.reducerPath]: playlistApi.reducer,
     [searchApi.reducerPath]: searchApi.reducer,
+    [lyricsApi.reducerPath]: lyricsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(userApi.middleware, playerApi.middleware, playlistApi.middleware, searchApi.middleware),
+    }).concat(
+      userApi.middleware,
+      playerApi.middleware,
+      playlistApi.middleware,
+      searchApi.middleware,
+      lyricsApi.middleware,
+    ),
   devTools: process.env.NODE_ENV === 'development',
 })
 setupListeners(store.dispatch)
