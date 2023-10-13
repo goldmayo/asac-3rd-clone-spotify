@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
@@ -12,6 +13,7 @@ import SkipNextButton from '@/components/common/playback/playback-control-button
 import SkipPreviousButton from '@/components/common/playback/playback-control-buttons/SkipPreviousButton'
 import PlayBackVolume from '@/components/common/playback/PlayBackVolume'
 import CurrentPlayingSkeleton from '@/components/common/skeletons/CurrentPlayingSkeleton'
+import { convertUriToDomainTypeId } from '@/lib/utils/convert'
 import { defaultPlaylistImage } from '@/lib/utils/staticImages'
 import { RootState } from '@/store/store'
 
@@ -34,9 +36,32 @@ function Player() {
               alt={`${currentTrack?.name}`}
             />
             <div className="flex flex-col">
-              <span className="text-color-text-primary hover:underline">{currentTrack?.name}</span>
-              <span className=" text-color-text-secondary hover:underline hover:text-color-text-primary">
-                {currentTrack?.artists.map((artist) => artist.name)}
+              <Link href={`/track/${convertUriToDomainTypeId(currentTrack.uri).id}`}>
+                <span className="text-color-text-primary hover:underline">{currentTrack?.name}</span>
+              </Link>
+              <span className="text-color-text-secondary">
+                {currentTrack?.artists.map((artist, index) =>
+                  index === 0 ? (
+                    <Link
+                      key={`${artist.uri}${index}`}
+                      href={`/artist/${convertUriToDomainTypeId(artist.uri).id}`}
+                      className={'hover:underline hover:text-color-text-primary'}
+                    >
+                      {artist.name}
+                    </Link>
+                  ) : (
+                    <>
+                      {`, `}
+                      <Link
+                        key={`${artist.uri}${index}`}
+                        href={`/artist/${convertUriToDomainTypeId(artist.uri).id}`}
+                        className={'hover:underline hover:text-color-text-primary'}
+                      >
+                        {artist.name}
+                      </Link>
+                    </>
+                  ),
+                )}
               </span>
             </div>
           </>

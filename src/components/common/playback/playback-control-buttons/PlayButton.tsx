@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button } from '@/components/common/playback/playback-control-buttons/Button'
 import { setPause } from '@/ducks/features/player/player'
 import { playerApi } from '@/ducks/service/player-api'
+import { convertUriToDomainTypeId } from '@/lib/utils/convert'
 import { RootState } from '@/store/store'
 
 export default function PlayButton() {
@@ -24,7 +25,7 @@ export default function PlayButton() {
     if (JSON.stringify(context) !== '{}' && context.uri) {
       playTrigger({
         device_id,
-        type: context.uri.split(':')[1] as 'track' | 'album' | 'playlist' | 'artist',
+        type: convertUriToDomainTypeId(context.uri).type as 'track',
         uri: context.uri,
         offset: currentTrack.uri,
         position_ms: position <= Math.floor(duration / 1000) * 1000 ? position : 0,
@@ -33,7 +34,7 @@ export default function PlayButton() {
     if (JSON.stringify(context) !== '{}' && !context.uri && context.metadata?.current_item.uri) {
       playTrigger({
         device_id,
-        type: context.metadata?.current_item.uri.split(':')[1] as 'track' | 'album' | 'playlist' | 'artist',
+        type: convertUriToDomainTypeId(context.metadata?.current_item.uri).type as 'album' | 'playlist' | 'artist',
         uri: context.metadata?.current_item.uri,
         offset: context.metadata?.current_item.uri,
         position_ms: position <= Math.floor(duration / 1000) * 1000 ? position : 0,

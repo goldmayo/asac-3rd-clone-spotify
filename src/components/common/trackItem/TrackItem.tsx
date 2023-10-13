@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setPause } from '@/ducks/features/player/player'
 import { playerApi } from '@/ducks/service/player-api'
 import { cn } from '@/lib/utils/classNames'
+import { convertUriToDomainTypeId } from '@/lib/utils/convert'
 import { defaultPlaylistImage } from '@/lib/utils/staticImages'
 import { RootState } from '@/store/store'
 
@@ -25,7 +26,7 @@ export default function TrackItem(props: Props) {
   const dispatch = useDispatch()
   const [playTrackTrigger] = playerApi.endpoints.startAndResumePlayback.useMutation()
   const [pauseTrackTrigger] = playerApi.endpoints.pausePlayback.useMutation()
-  const [domain,type,id] = props.uri.split(":")
+  const { type, id } = convertUriToDomainTypeId(props.uri)
 
   const handleOnClickPlayTrack = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -52,12 +53,12 @@ export default function TrackItem(props: Props) {
   return (
     <div className={cn('grid grid-cols-[16px_3fr_2fr_1fr] gap-2 items-center')}>
       <div className=" relative flex group w-4 items-center">
-        {props.uri === context.metadata?.current_item.uri && !paused ? (
+        {props.uri === context.metadata?.current_item?.uri && !paused ? (
           <button
             className={cn(
               'text-color-text-primary opacity-0 absolute -left-1 cursor-pointer group-hover:opacity-100 z-10',
               {
-                'opacity-100': props.uri === context.metadata?.current_item.uri && !paused,
+                'opacity-100': props.uri === context.metadata?.current_item?.uri && !paused,
               },
             )}
             onClick={handleOnClickPauseTrack}
@@ -69,7 +70,7 @@ export default function TrackItem(props: Props) {
             className={cn(
               'text-color-text-primary opacity-0 absolute -left-1 cursor-pointer group-hover:opacity-100 z-10',
               {
-                'opacity-100': props.uri === context.metadata?.current_item.uri && !paused,
+                'opacity-100': props.uri === context.metadata?.current_item?.uri && !paused,
               },
             )}
             onClick={handleOnClickPlayTrack}
@@ -79,7 +80,7 @@ export default function TrackItem(props: Props) {
         )}
         <div
           className={cn('text-color-text-secondary opacity-100 group-hover:opacity-0', {
-            'w-0 hidden': props.uri === context.metadata?.current_item.uri && !paused,
+            'w-0 hidden': props.uri === context.metadata?.current_item?.uri && !paused,
           })}
         >
           {props.index}
@@ -96,7 +97,7 @@ export default function TrackItem(props: Props) {
         <Link href={`/track/${id}`}>
           <span
             className={cn('text-color-text-primary hover:underline', {
-              'text-color-accent-primary': props.uri === context.metadata?.current_item.uri && !paused,
+              'text-color-accent-primary': props.uri === context.metadata?.current_item?.uri && !paused,
             })}
           >
             {props.trackName}

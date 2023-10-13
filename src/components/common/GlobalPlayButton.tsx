@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setPause } from '@/ducks/features/player/player'
 import { playerApi } from '@/ducks/service/player-api'
 import { cn } from '@/lib/utils/classNames'
+import { convertUriToDomainTypeId } from '@/lib/utils/convert'
 import { RootState } from '@/store/store'
 
 interface Props {
@@ -23,10 +24,16 @@ export default function GlobalPlayButton(props: Props) {
     e.preventDefault()
     playTrigger({
       device_id,
-      type: props.uri.split(':')[1] as 'track' | 'album' | 'playlist' | 'artist',
+      type: convertUriToDomainTypeId(props.uri).type as 'track' | 'album' | 'playlist' | 'artist',
       uri: props.uri,
       offset: props.uri,
-      position_ms: props.uri === context.uri ? (position <= Math.floor(duration / 1000) * 1000 ? position : 0) : 0,
+      // position_ms: props.uri === context.uri ? (position <= Math.floor(duration / 1000) * 1000 ? position : 0) : 0,
+      position_ms:
+        props.uri === context.metadata?.current_item.uri
+          ? position <= Math.floor(duration / 1000) * 1000
+            ? position
+            : 0
+          : 0,
     })
     dispatch(setPause(false))
   }
@@ -45,7 +52,8 @@ export default function GlobalPlayButton(props: Props) {
             'p-2 absolute text-base font-bold opacity-0 text-center align-middle duration-75 rounded-full cursor-pointer touch-manipulation bg-color-accent-primary hover:saturate-150 hover:scale-105',
             props.className,
             {
-              'opacity-100': props.uri === context.uri && !paused,
+              // 'opacity-100': props.uri === context.uri && !paused,
+              'opacity-100': props.uri === context.metadata?.current_item.uri && !paused,
             },
           )}
           onClick={handleOnClickPause}
@@ -58,7 +66,8 @@ export default function GlobalPlayButton(props: Props) {
             'p-2 absolute text-base font-bold opacity-0 text-center align-middle duration-75 rounded-full cursor-pointer touch-manipulation bg-color-accent-primary hover:saturate-150 hover:scale-105',
             props.className,
             {
-              'opacity-100': props.uri === context.uri && !paused,
+              // 'opacity-100': props.uri === context.uri && !paused,
+              'opacity-100': props.uri === context.metadata?.current_item.uri && !paused,
             },
           )}
           onClick={handleOnClickPlay}

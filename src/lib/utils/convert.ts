@@ -10,3 +10,8 @@ export const convertWidthToBoundary = (value: number, min: number, max: number) 
   if (value > max) return max
   return value
 }
+
+export const convertUriToDomainTypeId = (uri: string) => {
+  const [domain, type, id] = uri.split(':')
+  return { domain, type, id }
+}
