@@ -11,7 +11,7 @@ interface Props {
 
 export default function ContentCardContainer({ title, linkPath, children }: Props) {
   return (
-    <section className={'overflow-x-auto no-scrollbar no-scrollbar::-webkit-scrollbar'}>
+    <section className={''}>
       <div className="flex justify-between mb-2">
         <h2 className="text-2xl font-bold text-color-text-primary hover:underline active:underline hover:cursor-pointer">
           <Link href={`${linkPath}`}>{title}</Link>
@@ -24,7 +24,9 @@ export default function ContentCardContainer({ title, linkPath, children }: Prop
           모두표시
         </Link>
       </div>
-      <div className={cn(`flex gap-4 items-center scroll whitespace-nowrap scroll-smooth`)}>{children}</div>
+      <div className={cn(`flex gap-4 items-center overflow-x-scroll no-scrollbar no-scrollbar::-webkit-scrollbar`)}>
+        {children}
+      </div>
     </section>
   )
 }
