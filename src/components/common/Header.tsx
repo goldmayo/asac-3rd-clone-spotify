@@ -27,7 +27,7 @@ function Header({ type }: Typeprops): React.ReactElement {
   const session = useSession()
   const { data, error, isLoading } = useGetCurrentUserProfileQuery(`${session.data?.user?.id}`)
   return (
-    <header className="flex justify-between relative h-[64px] items-center bg-transparent rounded-lg z-10">
+    <header className="flex justify-between sticky top-0 h-[64px] items-center bg-transparent rounded-lg z-10 py-4">
       <div className="ml-1.5 flex gap-x-2">
         <button className="flex items-center justify-center w-8 h-8 bg-black rounded-full" onClick={back}>
           <BsChevronLeft fontSize="16px;" color="white" />{' '}
@@ -42,12 +42,13 @@ function Header({ type }: Typeprops): React.ReactElement {
           setopen(!open)
         }}
       >
-        <button className="rounded-full bg-black w-[20px] h-[40px] flex justify-center items-center mr-[30px]">
+        <button className="bg-transparent flex justify-center items-center">
           {session.status === 'authenticated' && data?.images[0] !== undefined ? (
             <Image
-              className="mr-2 rounded-full border-8 border-gray-700"
+              className="rounded-full border-2 border-gray-700"
               src={data ? `${data?.images[0].url} ` : defaultUserImage}
-              fill
+              width={32}
+              height={32}
               alt={`${data?.display_name}`}
             />
           ) : (
