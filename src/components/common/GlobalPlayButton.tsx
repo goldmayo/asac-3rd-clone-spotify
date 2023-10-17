@@ -29,7 +29,7 @@ export default function GlobalPlayButton(props: Props) {
       offset: props.uri,
       // position_ms: props.uri === context.uri ? (position <= Math.floor(duration / 1000) * 1000 ? position : 0) : 0,
       position_ms:
-        props.uri === context.metadata?.current_item.uri
+        props.uri === context.metadata?.current_item?.uri
           ? position <= Math.floor(duration / 1000) * 1000
             ? position
             : 0
@@ -53,7 +53,7 @@ export default function GlobalPlayButton(props: Props) {
             props.className,
             {
               // 'opacity-100': props.uri === context.uri && !paused,
-              'opacity-100': props.uri === context.metadata?.current_item.uri && !paused,
+              'opacity-100': props.uri === context.metadata?.current_item?.uri && !paused,
             },
           )}
           onClick={handleOnClickPause}
@@ -67,7 +67,7 @@ export default function GlobalPlayButton(props: Props) {
             props.className,
             {
               // 'opacity-100': props.uri === context.uri && !paused,
-              'opacity-100': props.uri === context.metadata?.current_item.uri && !paused,
+              'opacity-100': props.uri === context.metadata?.current_item?.uri && !paused,
             },
           )}
           onClick={handleOnClickPlay}
