@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <main className="bg-color-background-primary w-full h-screen grid grid-cols-[max-content_auto] grid-rows-[1fr_auto] px-4 gap-2">
             <Sidebar />
-            <div className="flex flex-col h-[calc(100vh-72px)s] overflow-y-auto mb-20 px-2">
+            <div className="flex flex-col h-[calc(100vh-72px)s] overflow-y-auto mb-20 px-2 z-20">
               <Header type={''} />
               {children}
             </div>

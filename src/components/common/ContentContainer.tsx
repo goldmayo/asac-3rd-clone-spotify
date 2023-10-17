@@ -11,7 +11,7 @@ interface Props {
 
 export default function ContentCardContainer({ title, linkPath, children }: Props) {
   return (
-    <section className={''}>
+    <section className={'mb-10'}>
       <div className="flex justify-between mb-2">
         <h2 className="text-2xl font-bold text-color-text-primary hover:underline active:underline hover:cursor-pointer">
           <Link href={`${linkPath}`}>{title}</Link>

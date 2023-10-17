@@ -1,8 +1,11 @@
+import { RGBColor } from 'colorthief'
 import React from 'react'
 
 import AlbumCardContentList from '@/components/AlbumCardContentList'
 import ContentCardListItem from '@/components/CardContentListItem'
-import Banner from '@/components/common/Banner'
+import ArtistBanner from '@/components/common/banner/ArtistBanner'
+import BannerBackgroundSecondary from '@/components/common/banner/banner-background/BannBackgroundSecondary'
+import BannerBackground from '@/components/common/banner/banner-background/BannerBackgroundPrimary'
 import ContentCardContainer from '@/components/common/ContentContainer'
 import GlobalPlayButton from '@/components/common/GlobalPlayButton'
 import TrackContainer from '@/components/common/trackItem/TrackContainer'
@@ -10,6 +13,7 @@ import getArtist from '@/core/api/artist/getArtist'
 import getArtistTopsTrack from '@/core/api/artist/getArtistTopTrack'
 import getRelatedArtists from '@/core/api/artist/getRelatedArtists'
 import { createContentFromItem } from '@/lib/utils/createContentObject'
+import { extractDominantColorFromImage } from '@/lib/utils/extractAvrColorFromImage'
 import { GetArtist } from '@/types/raw-api-data-type/artist/get-artist-data-type'
 import { GetArtistTopTrack } from '@/types/raw-api-data-type/artist/get-artist-top-track-data-type'
 import { GetArtistsAlbums } from '@/types/raw-api-data-type/artist/get-artists-albums-data-type'
@@ -22,35 +26,39 @@ export default async function page({ params }: { params: { slug: string } }) {
   const topTracks: GetArtistTopTrack = await getArtistTopsTrack(params.slug)
   const albums: GetArtistsAlbums = await getArtistAlbums(params.slug, 8)
   const relatedArtists: GetRelatedArtists = await getRelatedArtists(params.slug)
+  const dominantColor: RGBColor = await extractDominantColorFromImage(artist?.images[0].url!)
 
   return (
     <>
-      <Banner
-        type={'profile'}
-        inform={{
-          banner_name: artist?.name,
-          display_name: artist?.name,
-          playlist: 0,
-          following: artist?.followers.total,
-          img: artist?.images[0].url,
-        }}
-      />
-      <div className="flex gap-6 justify-start items-center">
-        <GlobalPlayButton uri={artist.uri} className={'static opacity-100'} />
+      {/* <div
+        style={{ backgroundColor: `rgba(${dominantColor.join(',')})` }}
+        className={
+          'bg-scroll bg-cover bg-[50%_15%] bg-no-repeat h-[40vh] min-h-[340px] absolute block left-0 top-0 w-full z-2'
+        }
+      /> */}
+      <ArtistBanner artistData={artist} />
+      <BannerBackground dominantColor={dominantColor} />
+      <div className="flex gap-6 justify-start items-center mb-10 relative">
+        <BannerBackgroundSecondary dominantColor={dominantColor} />
+        <GlobalPlayButton uri={artist.uri} className={'static opacity-100 ml-4'} />
         <button className="inline-block border border-color-text-secondary rounded-full px-2 text-color-text-primary">
           팔로잉
         </button>
       </div>
-      <div>
+      <div className="mb-10 px-4">
         <h2 className="text-color-text-primary font-bold text-2xl">인기</h2>
         <TrackContainer className={''} tracks={topTracks.tracks} />
       </div>
-      <AlbumCardContentList title={'디스코그래피'} linkPath={''} albums={albums.items} />
-      <ContentCardContainer title={`팬들이 좋아하는 다른 음악`} linkPath={'/test'}>
-        {relatedArtists?.artists.map((artist) => (
-          <ContentCardListItem key={artist.id} content={createContentFromItem.artist(artist)} />
-        ))}
-      </ContentCardContainer>
+      <div className="mb-10 px-4">
+        <AlbumCardContentList title={'디스코그래피'} linkPath={''} albums={albums.items} />
+      </div>
+      <div className="px-4">
+        <ContentCardContainer title={`팬들이 좋아하는 다른 음악`} linkPath={'/test'}>
+          {relatedArtists?.artists.map((artist) => (
+            <ContentCardListItem key={artist.id} content={createContentFromItem.artist(artist)} />
+          ))}
+        </ContentCardContainer>
+      </div>
     </>
   )
 }

@@ -33,14 +33,14 @@ export default function LyricsContainer(props: Props) {
   return (
     <>
       {props.lyrics.syncType === 'LINE_SYNCED' ? (
-        <div>
+        <div className="px-4">
           <h2 className="text-2xl font-bold text-color-text-primary mb-4">가사</h2>
           {props.lyrics.lines.map((line, index) => (
             <SyncedLyricsLine key={`${type}_${id}_${index}`} line={line} handleLyricLineClick={debouncedLyricClick} />
           ))}
         </div>
       ) : (
-        <div>
+        <div className="px-4">
           <h2 className="text-2xl font-bold text-color-text-primary mb-4">가사</h2>
           {props.lyrics.lines.map((line, index) => (
             <UnsyncedLyricsLine key={`${type}_${id}_${index}`} line={line} />

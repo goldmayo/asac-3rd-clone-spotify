@@ -1,26 +1,20 @@
 'use client'
 import Image from 'next/image'
-import { useSession } from 'next-auth/react'
 import { BsDot } from 'react-icons/bs'
 
-import { Userprofile } from '@/app/user/page'
+import { Userprofile } from '@/app/user/bannerpage'
 
-//type infoprops = {
-// inform: Userprofile
-//}
 interface Typeprops {
   type: 'profile' | 'playlist'
   inform: Userprofile
 }
 function Banner({ type, inform }: Typeprops): React.ReactElement {
-  const session = useSession()
-
   const { display_name, following, playlist, img } = inform
-  console.log(display_name, following, playlist, img)
 
   return (
     <div>
-      <div className="rounded-lg bg-gradient-to-b from-black to-color-active-primary">
+      {/* <div className="rounded-lg bg-gradient-to-b from-black to-color-active-primary"> */}
+      <div className="rounded-lg bg-transparent">
         <div>
           <div className="relative pointer-events-none ml-[30px] h-[30vh] flex z-0">
             <div className="absolute bottom-12  w-[192px] h-[192px] flex">
@@ -39,12 +33,11 @@ function Banner({ type, inform }: Typeprops): React.ReactElement {
                 <div className="flex">{type === 'profile' ? `${display_name}` : ' '}</div>
               </div>
               <div className="flex text-white absolute left-[250px] top-[230px] text-[0.8125rem] items-center">
-                <a>{type === 'profile' ? `공개 플레이리스트 ${playlist}개` : ''}</a>
+                <span>{type === 'profile' ? `공개 플레이리스트 ${playlist}개` : ''}</span>
                 <div>
                   <BsDot></BsDot>
                 </div>
-
-                <a>{type === 'profile' ? `팔로잉 ${following}명` : ''}</a>
+                <span>{type === 'profile' ? `팔로잉 ${following}명` : ''}</span>
               </div>
             </div>
           </div>

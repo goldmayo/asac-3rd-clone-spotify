@@ -7,7 +7,7 @@ export interface GetArtist {
   images: Image[]
   name: string
   popularity: number
-  type: string
+  type: 'artist'
   uri: string
 }
 
