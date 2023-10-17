@@ -28,3 +28,5 @@ export interface Followers {
   href: null
   total: number
 }
+
+export type { GetCurrentUserProfile as UserItem }
