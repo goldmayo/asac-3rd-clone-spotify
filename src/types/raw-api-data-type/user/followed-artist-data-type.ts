@@ -44,5 +44,3 @@ export interface Image {
 }
 
 export type Type = 'artist'
-
-export type { Item as UserItem }

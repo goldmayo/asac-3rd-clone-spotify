@@ -3,9 +3,8 @@ import { AlbumItem } from '@/types/raw-api-data-type/artist/get-artists-albums-d
 import { ArtistItem } from '@/types/raw-api-data-type/artist/get-related-artist-data-type'
 import { PlaylistItem } from '@/types/raw-api-data-type/playlist/featured-playlist-data-type'
 import { TrackItem } from '@/types/raw-api-data-type/track/get-track-data-type'
-import { UserItem } from '@/types/raw-api-data-type/user/followed-artist-data-type'
 
-type Items = ArtistItem | AlbumItem | PlaylistItem | TrackItem | UserItem
+type Items = ArtistItem | AlbumItem | PlaylistItem | TrackItem
 
 // HOC으로 감싸고 넘기면 가능할 듯?
 export type CommonContentObject = {
@@ -40,15 +39,15 @@ const getContentFromAlbum = (obj: AlbumItem): ContentCardObject => {
   return { ...common, image: images[0], description }
 }
 
-const getContentFromUser = (obj: UserItem): ContentCardObject => {
-  const common = extractCommonContentFromObject(obj)
-  const { images, type } = obj
-  return { ...common, image: images[0], description: type }
-}
+// const getContentFromUser = (obj: UserItem): ContentCardObject => {
+//   const common = extractCommonContentFromObject(obj)
+//   const { images, type } = obj
+//   return { ...common, image: images[0], description: type }
+// }
 
 const getContentFromPlayList = (obj: PlaylistItem): ContentCardObject => {
   const common = extractCommonContentFromObject(obj)
-  const { images, description, owner } = obj
+  const { images, description } = obj
   return { ...common, image: images[0], description }
 }
 
@@ -63,7 +62,7 @@ const getContentFromTrack = (obj: TrackItem): ContentCardObject => {
 export const createContentFromItem = {
   artist: getContentFromArtist,
   album: getContentFromAlbum,
-  user: getContentFromUser,
+  // user: getContentFromUser,
   playlist: getContentFromPlayList,
   track: getContentFromTrack,
 }
