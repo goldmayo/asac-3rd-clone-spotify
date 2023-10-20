@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 
 import { Button } from '@/components/common/playback/playback-control-buttons/Button'
 import { playerApi } from '@/ducks/service/player-api'
+import { cn } from '@/lib/utils/classNames'
 import { RootState } from '@/store/store'
 
 export default function ShuffleButton() {
@@ -18,7 +19,7 @@ export default function ShuffleButton() {
 
   return (
     <Button handleClick={handleShuffle}>
-      <PiShuffleLight size={'1rem'} />
+      <PiShuffleLight size={'1.125rem'} className={cn('', { 'text-color-accent-primary': shuffled })} />
     </Button>
   )
 }

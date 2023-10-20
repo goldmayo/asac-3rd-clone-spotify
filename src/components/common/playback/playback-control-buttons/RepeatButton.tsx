@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { Button } from '@/components/common/playback/playback-control-buttons/Button'
 import { playerApi } from '@/ducks/service/player-api'
+import { cn } from '@/lib/utils/classNames'
 import { RootState } from '@/store/store'
 
 export default function RepeatButton() {
@@ -21,7 +22,7 @@ export default function RepeatButton() {
 
   return (
     <Button handleClick={handleRepeat}>
-      <PiRepeat size={'1rem'} />
+      <PiRepeat size={'1.125rem'} className={cn('', { 'text-color-accent-primary': repeated !== 0 })} />
     </Button>
   )
 }
