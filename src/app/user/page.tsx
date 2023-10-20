@@ -1,6 +1,7 @@
 import Bannerpage from '@/app/user/bannerpage'
 import ContentCardListItem from '@/components/CardContentListItem'
 import ContentCardContainer from '@/components/common/ContentContainer'
+import Header from '@/components/common/Header'
 import getUsersTopItems from '@/core/api/user/getUsersTopItems'
 import { createContentFromItem } from '@/lib/utils/createContentObject'
 import { GetUserTopItems, UserTopArtistItem } from '@/types/raw-api-data-type/user/get-user-top-items-data-type'
@@ -9,6 +10,7 @@ export default async function Home() {
 
   return (
     <div className="flex-col">
+      <Header type={''} />
       <Bannerpage></Bannerpage>
 
       {usersTopItems ? (

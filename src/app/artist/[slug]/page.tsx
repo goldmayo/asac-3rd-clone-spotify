@@ -8,6 +8,7 @@ import BannerBackgroundSecondary from '@/components/common/banner/banner-backgro
 import BannerBackground from '@/components/common/banner/banner-background/BannerBackgroundPrimary'
 import ContentCardContainer from '@/components/common/ContentContainer'
 import GlobalPlayButton from '@/components/common/GlobalPlayButton'
+import Header from '@/components/common/Header'
 import TrackContainer from '@/components/common/trackItem/TrackContainer'
 import getArtist from '@/core/api/artist/getArtist'
 import getArtistTopsTrack from '@/core/api/artist/getArtistTopTrack'
@@ -30,15 +31,11 @@ export default async function page({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      {/* <div
-        style={{ backgroundColor: `rgba(${dominantColor.join(',')})` }}
-        className={
-          'bg-scroll bg-cover bg-[50%_15%] bg-no-repeat h-[40vh] min-h-[340px] absolute block left-0 top-0 w-full z-2'
-        }
-      /> */}
+      {/* <HeaderBackground type={'default'} bgColor={dominantColor} /> */}
+      <Header type={'default'} bgColor={dominantColor} />
       <ArtistBanner artistData={artist} />
       <BannerBackground dominantColor={dominantColor} />
-      <div className="flex gap-6 justify-start items-center mb-10 relative">
+      <div className="flex gap-6 justify-start items-center py-4 mb-6 relative">
         <BannerBackgroundSecondary dominantColor={dominantColor} />
         <GlobalPlayButton uri={artist.uri} className={'static opacity-100 ml-4'} />
         <button className="inline-block border border-color-text-secondary rounded-full px-2 text-color-text-primary">

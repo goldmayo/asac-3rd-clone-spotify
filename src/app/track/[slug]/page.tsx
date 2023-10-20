@@ -5,10 +5,10 @@ import React from 'react'
 
 import AlbumCardContentList from '@/components/AlbumCardContentList'
 import BannerBackgroundSecondary from '@/components/common/banner/banner-background/BannBackgroundSecondary'
-// import { extractDominantColorFromImage } from '@/lib/utils/extractAvrColorFromImage'
 import BannerBackgroundPrimary from '@/components/common/banner/banner-background/BannerBackgroundPrimary'
 import TracKBanner from '@/components/common/banner/TracKBanner'
 import GlobalPlayButton from '@/components/common/GlobalPlayButton'
+import Header from '@/components/common/Header'
 import LyricsContainer from '@/components/common/lyrics/LyricsContainer'
 import TrackContainer from '@/components/common/trackItem/TrackContainer'
 import getArtist from '@/core/api/artist/getArtist'
@@ -35,9 +35,10 @@ export default async function page({ params }: { params: { slug: string } }) {
 
   return (
     <>
+      <Header type={'default'} bgColor={dominantColor} />
       <BannerBackgroundPrimary dominantColor={dominantColor} />
       <TracKBanner trackData={track} />
-      <div className="flex gap-6 justify-start items-center bg-transparent mb-10 relative">
+      <div className="flex gap-6 justify-start items-center py-4 mb-6 relative">
         <BannerBackgroundSecondary dominantColor={dominantColor} />
         <GlobalPlayButton uri={track.uri} className={'static opacity-100 ml-4'} />
         <button className="inline-block border border-color-text-secondary rounded-full px-2 text-color-text-primary">

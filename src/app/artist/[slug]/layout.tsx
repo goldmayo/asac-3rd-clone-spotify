@@ -18,5 +18,4 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArtistLayout({ children }: { children: React.ReactNode }) {
   return <section className="flex flex-col mb-10 relative">{children}</section>
-  // return <section className="flex flex-col gap-10 pt-2 mb-10 relative">{children}</section>
 }

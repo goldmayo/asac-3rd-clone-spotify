@@ -3,8 +3,6 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-// import Script from 'next/script'
-import Header from '@/components/common/Header'
 import Player from '@/components/common/Player'
 import Sidebar from '@/components/common/Sidebar'
 import Providers from '@/components/provider/Providers'
@@ -24,11 +22,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <main className="bg-color-background-primary w-full h-screen grid grid-cols-[max-content_auto] grid-rows-[1fr_auto] px-4 gap-2">
             <Sidebar />
-            <div className="flex flex-col h-[calc(100vh-72px)s] overflow-y-auto mb-20 px-2 z-20">
-              <Header type={''} />
+            <div id="main_area" className="flex flex-col overflow-y-auto z-20 mt-2">
               {children}
             </div>
-            <div className="fixed bottom-0 col-span-2 h-[72px]">
+            {/* <div className="flex flex-col overflow-y-auto mb-20 z-20 mt-2">{children}</div> */}
+            <div className="sticky bottom-0 col-span-2 h-[72px]">
               <Player />
             </div>
           </main>

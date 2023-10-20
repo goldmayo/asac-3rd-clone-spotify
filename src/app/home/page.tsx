@@ -1,6 +1,8 @@
 import BarContentCard from '@/components/BarContentCard'
 import ContentCardListItem from '@/components/CardContentListItem'
+import HomeBanner from '@/components/common/banner/HomeBanner'
 import ContentCardContainer from '@/components/common/ContentContainer'
+import Header from '@/components/common/Header'
 import getAvailableGenreSeeds from '@/core/api/genre/getAvailableGenreSeeds'
 import getRecommendations from '@/core/api/track/getRcommendations'
 import getFollowedArtists from '@/core/api/user/getUserFollowedArtists'
@@ -28,27 +30,30 @@ export default async function Home() {
   )
   const userProfile: GetCurrentUserProfile = await getCurrentUsersProfile()
   return (
-    // <></>
-    <section className="flex flex-col gap-10 pt-2 mb-10">
-      {/* <Banner type={'playlist'} inform={undefined}/> */}
-      <BarContentCard
-        content={allTimeUserTopItems.items.map((item) => createContentFromItem.artist(item as UserTopArtistItem))}
-      />
-      <ContentCardContainer title={'좋아하는 아티스트'} linkPath={'/test'}>
-        {followedArtists.artists.items.map((artist) => (
-          <ContentCardListItem key={artist.id} content={createContentFromItem.artist(artist)} />
-        ))}
-      </ContentCardContainer>
-      <ContentCardContainer title={'다시 들어보세요'} linkPath={'/test'}>
-        {usersTopTracks?.items.map((track) => (
-          <ContentCardListItem key={track.id} content={createContentFromItem.track(track)} />
-        ))}
-      </ContentCardContainer>
-      <ContentCardContainer title={`${userProfile.display_name} 님을 위한 트랙 추천`} linkPath={'/test'}>
-        {recommendedTracks?.tracks.map((track) => (
-          <ContentCardListItem key={track.id} content={createContentFromItem.track(track)} />
-        ))}
-      </ContentCardContainer>
-    </section>
+    <>
+      <Header type={'home'} />
+      <section className="flex flex-col gap-10 mt-2 px-4 mb-10">
+        <HomeBanner>
+          <BarContentCard
+            content={allTimeUserTopItems.items.map((item) => createContentFromItem.artist(item as UserTopArtistItem))}
+          />
+        </HomeBanner>
+        <ContentCardContainer title={'좋아하는 아티스트'} linkPath={'/test'}>
+          {followedArtists.artists.items.map((artist) => (
+            <ContentCardListItem key={artist.id} content={createContentFromItem.artist(artist)} />
+          ))}
+        </ContentCardContainer>
+        <ContentCardContainer title={'다시 들어보세요'} linkPath={'/test'}>
+          {usersTopTracks?.items.map((track) => (
+            <ContentCardListItem key={track.id} content={createContentFromItem.track(track)} />
+          ))}
+        </ContentCardContainer>
+        <ContentCardContainer title={`${userProfile.display_name} 님을 위한 트랙 추천`} linkPath={'/test'}>
+          {recommendedTracks?.tracks.map((track) => (
+            <ContentCardListItem key={track.id} content={createContentFromItem.track(track)} />
+          ))}
+        </ContentCardContainer>
+      </section>
+    </>
   )
 }
