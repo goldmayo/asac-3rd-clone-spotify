@@ -27,7 +27,7 @@ interface Props {
 export function DefaultBannerLayout(props: Props) {
   return (
     <BannerContext.Provider value={props.contents}>
-      <div className={cn('flex gap-4 bg-transparent z-10 h-[40vh] items-center px-4', props.className)}>
+      <div className={cn('flex gap-4 bg-transparent z-0 h-[calc(40vh_-_64px)] items-center px-4', props.className)}>
         {props.image && props.image}
         <div className={cn('flex flex-col justify-center')}>
           {props.type && props.type}

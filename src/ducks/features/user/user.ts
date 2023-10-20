@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { Image } from '@/types/common/images-data-type'
 
@@ -19,11 +19,17 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // pauseTrack: (state, action: PayloadAction<boolean>) => {
-    //   state.isPlaying = action.payload
-    // },
+    setName: (state, action: PayloadAction<string>) => {
+      state.name = action.payload
+    },
+    setFollowers: (state, action: PayloadAction<number>) => {
+      state.followers = action.payload
+    },
+    setProfileImage: (state, action: PayloadAction<Image>) => {
+      state.profileImage = action.payload
+    },
   },
 })
 
-export const {} = userSlice.actions
+export const { setName, setFollowers, setProfileImage } = userSlice.actions
 export default userSlice.reducer

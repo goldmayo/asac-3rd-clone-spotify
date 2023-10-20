@@ -21,7 +21,7 @@ export const userApi = createApi({
     getUserFollowedArtist: builder.query<FollowedArtist, number>({
       query: (limit) => `/following?type=artist&limit=${limit}`,
     }),
-    getCurrentUserProfile: builder.query<GetCurrentUserProfile, string>({
+    getCurrentUserProfile: builder.query<GetCurrentUserProfile, null>({
       query: () => `/`,
     }),
     getUsersSavedTracks: builder.query<UsersSavedTracks, number>({

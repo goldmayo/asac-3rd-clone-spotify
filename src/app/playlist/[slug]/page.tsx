@@ -9,13 +9,13 @@ export default async function page({ params }: { params: { slug: string } }) {
   const playlistSnapshot = playlistData?.snapshot_id //The version identifier for the current playlist.
 
   const playlistBannerData = {
-    title: playlistData?.name ,
-    coverImg: playlistData?.images[0]?.url , // 첫 번째 이미지 URL
-    description: playlistData?.description ,
-    type: playlistData?.type ,
+    title: playlistData?.name,
+    coverImg: playlistData?.images[0]?.url, // 첫 번째 이미지 URL
+    description: playlistData?.description,
+    type: playlistData?.type,
     owner_name: playlistData?.owner.display_name,
-    followers: playlistData?.followers?.total ,
-    total_tracks: playlistData?.tracks?.total ,
+    followers: playlistData?.followers?.total,
+    total_tracks: playlistData?.tracks?.total,
   }
 
   return (
