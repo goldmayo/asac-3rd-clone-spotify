@@ -96,7 +96,7 @@ export default function TrackItem(props: Props) {
         />
         <Link href={`/track/${id}`}>
           <span
-            className={cn('text-color-text-primary hover:underline', {
+            className={cn('text-color-text-primary hover:underline line-clamp-1', {
               'text-color-accent-primary': props.uri === context.metadata?.current_item?.uri && !paused,
             })}
           >

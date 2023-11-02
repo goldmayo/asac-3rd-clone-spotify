@@ -25,13 +25,14 @@ export default function BarContentCard(props: Props) {
         {props.content.map((item) => (
           <li
             key={item.id}
-            className="flex justify-start bg-color-text-primary/10 rounded-md group h-20 min-w-[270px] items-center"
+            className="flex justify-start bg-color-text-primary/10 rounded-md group min-w-[270px] items-center"
           >
             <div className="flex">
               <Image
+                className={'rounded-l-md'}
                 src={!item.image ? defaultPlaylistImage : `${item.image.url}`}
-                height={70}
-                width={70}
+                height={80}
+                width={80}
                 alt={`${item.name}`}
               />
             </div>

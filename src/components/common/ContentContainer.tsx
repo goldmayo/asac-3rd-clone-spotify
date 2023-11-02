@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import React from 'react'
 
 import { cn } from '@/lib/utils/classNames'
 
@@ -8,6 +9,11 @@ interface Props {
   linkPath: string
   children: React.ReactNode
 }
+
+/**
+ * 2
+ * 3 4 5 6 7 8
+ */
 
 export default function ContentCardContainer({ title, linkPath, children }: Props) {
   return (
