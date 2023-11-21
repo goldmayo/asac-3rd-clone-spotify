@@ -9,12 +9,10 @@ import BannerBackgroundPrimary from '@/components/common/banner/banner-backgroun
 import TracKBanner from '@/components/common/banner/TracKBanner'
 import GlobalPlayButton from '@/components/common/GlobalPlayButton'
 import Header from '@/components/common/Header'
-import LyricsContainer from '@/components/common/lyrics/LyricsContainer'
 import TrackContainer from '@/components/common/trackItem/TrackContainer'
 import getArtist from '@/core/api/artist/getArtist'
 import getArtistAlbums from '@/core/api/artist/getArtistAlbums'
 import getArtistTopsTrack from '@/core/api/artist/getArtistTopTrack'
-import getLyricsByTrackId from '@/core/api/track/getLyricsByTrackId'
 import getTrack from '@/core/api/track/getTrack'
 import { cn } from '@/lib/utils/classNames'
 import { extractDominantColorFromImage } from '@/lib/utils/extractAvrColorFromImage'
@@ -22,7 +20,6 @@ import { defaultUserImage } from '@/lib/utils/staticImages'
 import { GetArtist } from '@/types/raw-api-data-type/artist/get-artist-data-type'
 import { GetArtistTopTrack } from '@/types/raw-api-data-type/artist/get-artist-top-track-data-type'
 import { GetArtistsAlbums } from '@/types/raw-api-data-type/artist/get-artists-albums-data-type'
-import { Lyrics } from '@/types/raw-api-data-type/lyrics/get-lyrics-by-track-id-data'
 import { GetTrack } from '@/types/raw-api-data-type/track/get-track-data-type'
 
 export default async function page({ params }: { params: { slug: string } }) {
@@ -30,7 +27,7 @@ export default async function page({ params }: { params: { slug: string } }) {
   const artist: GetArtist = await getArtist(track?.artists![0].id)
   const topTracks: GetArtistTopTrack = await getArtistTopsTrack(track?.artists![0].id!)
   const albums: GetArtistsAlbums = await getArtistAlbums(track?.artists![0].id, 8)
-  const lyrics: Lyrics = await getLyricsByTrackId(params.slug)
+  // const lyrics: Lyrics = await getLyricsByTrackId(params.slug)
   const dominantColor: RGBColor = await extractDominantColorFromImage(track.album?.images[0].url!)
 
   return (
@@ -45,7 +42,7 @@ export default async function page({ params }: { params: { slug: string } }) {
           팔로잉
         </button>
       </div>
-      {!lyrics.error && <LyricsContainer uri={track.uri} lyrics={lyrics} />}
+      {/* {!lyrics.error && <LyricsContainer uri={track.uri} lyrics={lyrics} />} */}
       <div className="mb-10 px-4 min-w-[200px] max-w-[400px] rounded-lg hover:bg-color-hover-primary/30">
         <Link className={'cursor-pointer'} href={`/${artist.type}/${artist.id}`}>
           <div className={cn('grid grid-cols-[auto_1fr] p-2 gap-x-3 gap-y-2 overflow-x-hidden')}>
